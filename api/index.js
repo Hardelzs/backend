@@ -3,7 +3,7 @@ const cors = require("cors");
 const serverless = require("serverless-http");
 
 const authRoutes = require("../routes/auth");
-const reportsRoutes = require("../routes/report"); // check spelling: "report.js" not "reports.js"
+const reportsRoutes = require("../routes/report"); // ✅ make sure the filename matches exactly!
 
 const app = express();
 
@@ -14,6 +14,6 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/reports", reportsRoutes);
 
-// Export as a serverless function
+// Export for Vercel serverless
 module.exports = app;
 module.exports.handler = serverless(app);
