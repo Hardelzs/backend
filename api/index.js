@@ -1,19 +1,23 @@
-const express = require('express');
+const express = require("express");
+const cors = require("cors");
+
 const app = express();
-const bodyParser = require('body-parser');
-const cors = require('cors');
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
-// Import your routes
-const authRoutes = require('./routes/auth');
-const courseRoutes = require('./routes/courses');
-const reportRoutes = require('./routes/report');
+// Routes
+const authRoutes = require("./routes/auth");
+const courseRoutes = require("./routes/courses");
+const reportRoutes = require("./routes/report");
 
-// Use routes
-app.use('/api/auth', authRoutes);
-app.use('/api/courses', courseRoutes);
-app.use('/api/reports', reportRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/courses", courseRoutes);
+app.use("/api/reports", reportRoutes);
+
+// Default
+app.get("/", (req, res) => {
+  res.send("Backend API is running 🚀");
+});
 
 module.exports = app;
