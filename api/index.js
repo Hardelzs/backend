@@ -1,21 +1,19 @@
-const express = require("express");
-const serverless = require("serverless-http");
-const cors = require("cors");
-
+const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
 app.use(cors());
-app.use(express.json());
+app.use(bodyParser.json());
 
-// import your existing routes
-const authRoutes = require("../routes/auth");
-const coursesRoutes = require("../routes/courses");
-const reportsRoutes = require("../routes/reports");
+// Import your routes
+const authRoutes = require('./routes/auth');
+const courseRoutes = require('./routes/courses');
+const reportRoutes = require('./routes/report');
 
-// mount them
-app.use("/api/auth", authRoutes);
-app.use("/api/courses", coursesRoutes);
-app.use("/api/reports", reportsRoutes);
+// Use routes
+app.use('/api/auth', authRoutes);
+app.use('/api/courses', courseRoutes);
+app.use('/api/reports', reportRoutes);
 
-// export for Vercel
 module.exports = app;
-module.exports.handler = serverless(app);
