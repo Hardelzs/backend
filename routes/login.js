@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-// Simple sample credentials (from your request).
+// zsample.
 const SAMPLE_EMAIL = 'maliapugh@radiant-flow.org';
 const SAMPLE_PASSWORD = 'Aa123456';
 
@@ -13,12 +13,12 @@ router.post('/', (req, res) => {
 		return res.status(400).json({ error: 'Missing email or password' });
 	}
 
-	// Basic check against the sample credentials. In a real app, check DB.
+	// Basic check against the sample credentials. In a real app.
 	if (email !== SAMPLE_EMAIL || password !== SAMPLE_PASSWORD) {
 		return res.status(401).json({ error: 'Invalid credentials' });
 	}
 
-	// Example response using the structure you provided
+	// json syructure
 	const response = {
 		clubs: [
 			{
