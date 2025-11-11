@@ -1,15 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db');
+const { dbAsync } = require('../db');
 
 // Create a course and assign it to a lecturer
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const { faculty, course_name, course_code, lecturer_id } = req.body;
   try {
-    const info = db.prepare(
-      `INSERT INTO courses (faculty, course_name, course_code, lecturer_id) VALUES (?,?,?,?)`
-    ).run(faculty, course_name, course_code, lecturer_id);
-    const course = db.prepare('SELECT * FROM courses WHERE id = ?').get(info.lastInsertRowid);
+    const info = await dbAsync.run(
+      `INSERT INTO courses (faculty, course_name, course_code, lecturer_id) VALUES (?,?,?,?)`,
+      [faculty, course_name, course_code, lecturer_id]
+    );
+    const course = await dbAsync.get('SELECT * FROM courses WHERE id = ?', [info.lastInsertRowid]);
     res.json(course);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -17,13 +18,13 @@ router.post('/', (req, res) => {
 });
 
 // List all courses
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    const rows = db.prepare(
+    const rows = await dbAsync.all(
       `SELECT c.*, u.name as lecturer_name, u.email as lecturer_email
        FROM courses c
        LEFT JOIN users u ON c.lecturer_id = u.id`
-    ).all();
+    );
     res.json(rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
