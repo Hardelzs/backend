@@ -4,12 +4,13 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "postinstall": "npm rebuild --build-from-source sqlite3 || true"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
     "bcryptjs": "^2.4.3",
-    "better-sqlite3": "^12.4.1",
+    
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.0",
